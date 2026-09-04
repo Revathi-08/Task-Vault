@@ -1,4 +1,4 @@
-# 🔐 Task-Vault - Secure Notes App
+# 🔐 Task-Vault - Secure Tasks manage and remainder App
 
 A secure, personal notes management web application built with Flask. Your private vault for tasks and notes!
 
