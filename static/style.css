@@ -1,0 +1,144 @@
+body {
+    font-family: -apple-system, sans-serif;
+    background: #f2f2f7;
+    margin: 0;
+    padding: 15px;
+    transition: 0.3s;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-card {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    margin: 15px 0;
+    box-shadow: 0 4px 12px #0001;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+button,
+.btn-small {
+    background: black;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.note-card {
+    padding: 15px;
+    border-radius: 16px;
+    margin: 12px 0;
+    position: relative;
+    box-shadow: 0 2px 8px #0001;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 45px;
+    font-size: 12px;
+    background: black;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.actions a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.del {
+    color: red !important;
+}
+
+.search {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.alert {
+    background: #ff3b30;
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+.dark {
+    background: #000;
+    color: white;
+}
+
+.dark.form-card,
+.dark.note-card {
+    background: #1c1c1e !important;
+    color: white;
+    border: 1px solid #333;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+    background: #2c2c2e;
+    color: white;
+    border-color: #444;
+}
+
+.login-body {
+    background: #f2f2f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.7;
+    }
+}

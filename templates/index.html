@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>TaskVault</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <style>
+
+        /* =========================
+           BODY
+        ========================== */
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 15px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+
+        /* =========================
+           STATISTICS
+        ========================== */
+
+        .stats {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .total {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .pending {
+            background: #fff8e1;
+            color: #f9a825;
+        }
+
+        .done {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .search-box button {
+            padding: 12px 22px;
+            background: #1565c0;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           FILTERS
+        ========================== */
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0 18px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .filter-btn.active-all {
+            background: #1565c0;
+            color: #fff;
+            border-color: #1565c0;
+        }
+
+        .filter-btn.active-high {
+            background: #e53935;
+            color: #fff;
+            border-color: #e53935;
+        }
+
+        .filter-btn.active-today {
+            background: #fb8c00;
+            color: #fff;
+            border-color: #fb8c00;
+        }
+
+        .filter-btn.active-done {
+            background: #2e7d32;
+            color: #fff;
+            border-color: #2e7d32;
+        }
+
+        .filter-btn.active-pending {
+            background: #f9a825;
+            color: #fff;
+            border-color: #f9a825;
+        }
+
+        .filter-btn.inactive {
+            background: #fff;
+            color: #555;
+        }
+
+
+        /* =========================
+           ADD TASK
+        ========================== */
+
+        .add-task {
+            background: #fafafa;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .add-task input,
+        .add-task textarea,
+        .add-task select {
+            width: 100%;
+            padding: 12px;
+            margin: 7px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+
+        /* Date and Priority */
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row input {
+            flex: 1;
+        }
+
+        .row select {
+            flex: 0.6;
+            min-width: 150px;
+        }
+
+
+        /* Add button */
+        .add-btn {
+            background: #2e7d32;
+            color: #fff;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+
+        /* =========================
+           TASK CARD
+        ========================== */
+
+        .task {
+            border: 1px solid #eee;
+            padding: 14px;
+            border-radius: 12px;
+            margin: 12px 0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        /* Priority colors */
+
+        .task.high {
+            border-left: 5px solid #e53935;
+        }
+
+        .task.medium {
+            border-left: 5px solid #fb8c00;
+        }
+
+        .task.low {
+            border-left: 5px solid #43a047;
+        }
+
+
+        /* Completed task */
+
+        .task.completed {
+            background: #f1f8e9;
+        }
+
+        .task.completed b {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+
+        /* =========================
+           TASK BUTTONS
+        ========================== */
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-done {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .btn-edit {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #bbdefb;
+        }
+
+        .btn-del {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+
+        /* =========================
+           FILE LINK
+        ========================== */
+
+        .file-link {
+            font-size: 12px;
+            color: #1565c0;
+            text-decoration: none;
+            background: #e3f2fd;
+            padding: 3px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <div class="header">
+
+            <h2>
+                🔐 TaskVault - Hi {{ username }}!
+            </h2>
+
+            <a
+                href="/logout"
+                style="text-decoration: none;"
+            >
+                Logout
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <div class="stats">
+
+            <div class="stat-card total">
+
+                {{ total }}
+
+                <br>
+
+                Total
+
+            </div>
+
+
+            <div class="stat-card pending">
+
+                {{ pending }}
+
+                <br>
+
+                Pending
+
+            </div>
+
+
+            <div class="stat-card done">
+
+                {{ done }}
+
+                <br>
+
+                Done
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH
+        ========================== -->
+
+        <form
+            method="GET"
+            class="search-box"
+        >
+
+            <input
+                type="text"
+                name="q"
+                placeholder="🔍 Search tasks..."
+                value="{{ request.args.get('q', '') }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+        <!-- =========================
+             FILTERS
+        ========================== -->
+
+        <div class="filters">
+
+            <a
+                class="filter-btn
+                {% if current_filter == 'all' %}
+                    active-all
+                {% else %}
+                    inactive
+                {% endif %}"
+                href="/?filter=all"
+            >
+                All
+            </a>
+
+
+            <a
+                class="filter-btn
+                {% if current_filter == 'high' %}
+                    active-high
+                {% else %}
+                    inactive
+                {% endif %}"
+                href="/?filter=high"
+            >
+                🔥 High
+            </a>
+
+
+            <a
+                class="filter-btn
+                {% if current_filter == 'today' %}
+                    active-today
+                {% else %}
+                    inactive
+                {% endif %}"
+                href="/?filter=today"
+            >
+                📅 Today
+            </a>
+
+
+            <a
+                class="filter-btn
+                {% if current_filter == 'done' %}
+                    active-done
+                {% else %}
+                    inactive
+                {% endif %}"
+                href="/?filter=done"
+            >
+                ✅ Done
+            </a>
+
+
+            <a
+                class="filter-btn
+                {% if current_filter == 'pending' %}
+                    active-pending
+                {% else %}
+                    inactive
+                {% endif %}"
+                href="/?filter=pending"
+            >
+                ⏳ Pending
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             ADD TASK
+        ========================== -->
+
+        <div class="add-task">
+
+            <h3>
+                Add New Task
+            </h3>
+
+
+            <form
+                method="POST"
+                action="/add"
+                enctype="multipart/form-data"
+            >
+
+                <!-- Title -->
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    required
+                >
+
+
+                <!-- Description -->
+                <textarea
+                    name="description"
+                    placeholder="Description"
+                ></textarea>
+
+
+                <!-- Date and Priority -->
+                <div class="row">
+
+                    <input
+                        type="date"
+                        name="due_date"
+                    >
+
+
+                    <select name="priority">
+
+                        <option>
+                            High
+                        </option>
+
+                        <option>
+                            Medium
+                        </option>
+
+                        <option>
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- File upload -->
+                <label
+                    style="
+                        font-size: 13px;
+                        color: #555;
+                        margin-top: 8px;
+                        display: block;
+                    "
+                >
+                    📎 Attach File (PDF / Image):
+                </label>
+
+
+                <input
+                    type="file"
+                    name="attachment"
+                >
+
+
+                <!-- Add button -->
+                <button
+                    class="add-btn"
+                    type="submit"
+                >
+                    + Add Task
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
+             TASK LIST
+        ========================== -->
+
+        <h3 style="margin-top: 25px;">
+            Your Tasks
+        </h3>
+
+
+        {% for t in tasks %}
+
+            <!-- Priority class -->
+            {% set prio_class =
+                t['priority'].lower()
+                if t['priority']
+                else 'low'
+            %}
+
+
+            <!-- Completed class -->
+            {% set comp_class =
+                'completed'
+                if t['status'] == 'Done'
+                else ''
+            %}
+
+
+            <!-- Task -->
+            <div
+                class="task {{ prio_class }} {{ comp_class }}"
+            >
+
+                <!-- Task information -->
+                <div>
+
+                    <b>
+                        {{ t['title'] }}
+                    </b>
+
+
+                    <small style="color: #777;">
+
+                        (
+                        {{ t['priority'] }}
+
+                        -
+
+                        {% if t['due_date'] %}
+
+                            {% set d =
+                                t['due_date'].split('-')
+                            %}
+
+                            {{ d[2] }}-{{ d[1] }}-{{ d[0] }}
+
+                        {% else %}
+
+                            No date
+
+                        {% endif %}
+
+                        )
+
+                    </small>
+
+                    <br>
+
+
+                    <!-- Description -->
+                    <small>
+                        {{ t['description'] }}
+                    </small>
+
+
+                    <!-- Attachment -->
+                    {% if t['file_name'] %}
+
+                        <br>
+
+                        <a
+                            class="file-link"
+                            href="/uploads/{{ t['file_name'] }}"
+                            target="_blank"
+                        >
+                            📎 {{ t['file_name'] }}
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Task actions -->
+                <div class="task-actions">
+
+                    <!-- Done / Undo -->
+                    <a
+                        class="btn btn-done"
+                        href="/toggle/{{ t['id'] }}"
+                    >
+
+                        {% if t['status'] == 'Done' %}
+
+                            ↩️ Undo
+
+                        {% else %}
+
+                            ✅ Done
+
+                        {% endif %}
+
+                    </a>
+
+
+                    <!-- Edit -->
+                    <a
+                        class="btn btn-edit"
+                        href="/edit/{{ t['id'] }}"
+                    >
+                        ✏️ Edit
+                    </a>
+
+
+                    <!-- Delete -->
+                    <a
+                        class="btn btn-del"
+                        href="/delete/{{ t['id'] }}"
+                    >
+                        🗑️ Delete
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+            <p>
+                No tasks found for this filter!
+            </p>
+
+        {% endfor %}
+
+
+    </div>
+
+</body>
+
+</html>

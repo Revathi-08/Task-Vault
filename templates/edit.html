@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Edit Task - TaskVault</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <style>
+
+        /* Page */
+        body {
+            font-family: Segoe UI;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+
+        /* Main box */
+        .box {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* Form fields */
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+
+        /* Save button */
+        button {
+            background: #1565c0;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        /* Cancel link */
+        a {
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="box">
+
+        <h2>
+            ✏️ Edit Task
+        </h2>
+
+
+        <form method="POST">
+
+            <!-- Title -->
+            <input
+                type="text"
+                name="title"
+                value="{{ task['title'] }}"
+                required
+            >
+
+
+            <!-- Description -->
+            <textarea
+                name="description"
+                rows="4"
+            >{{ task['description'] }}</textarea>
+
+
+            <!-- Due date -->
+            <input
+                type="date"
+                name="due_date"
+                value="{{ task['due_date'] }}"
+            >
+
+
+            <!-- Priority -->
+            <select name="priority">
+
+                <option
+                    {% if task['priority'] == 'High' %}
+                        selected
+                    {% endif %}
+                >
+                    High
+                </option>
+
+                <option
+                    {% if task['priority'] == 'Medium' %}
+                        selected
+                    {% endif %}
+                >
+                    Medium
+                </option>
+
+                <option
+                    {% if task['priority'] == 'Low' %}
+                        selected
+                    {% endif %}
+                >
+                    Low
+                </option>
+
+            </select>
+
+
+            <br><br>
+
+
+            <!-- Save button -->
+            <button type="submit">
+                💾 Save Changes
+            </button>
+
+
+            <!-- Cancel -->
+            <a href="/">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

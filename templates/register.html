@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+</head>
+
+<body
+    style="
+        background: #f2f2f7;
+        display: flex;
+        justify-content: center;
+        padding-top: 80px;
+    "
+>
+
+    <div
+        class="form-card"
+        style="width: 320px;"
+    >
+
+        <h2>Create Account</h2>
+
+        <form method="POST">
+
+            <input
+                name="username"
+                placeholder="Choose username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Choose password"
+                required
+            >
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <p>
+            Already have account?
+            <a href="/login">Login</a>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
